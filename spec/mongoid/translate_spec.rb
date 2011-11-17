@@ -3,17 +3,16 @@ require "spec_helper"
 
 class Foo
   include Mongoid::Document
-  include Mongoid::Translation
-
-  field :title,     String
-  field :content,   String
+  include Mongoid::Translate
 
   translate :title, :content
 end
 
-class Translation::Foo
-  include Mongoid::Document
-  include Mongoid::Translation
+module Translation
+  class Foo
+    include Mongoid::Document
+    include Mongoid::Translation
+  end
 end
 
 describe Mongoid::Translate do
@@ -24,33 +23,33 @@ describe Mongoid::Translate do
   let(:japanese_translation) {Translation::Foo.new(:title => "日本語で",
                                                      :content => "確かに日本語なんです",
                                                      :language => :ja)}
-  let(:classified_with_translation) do
-    classified = Foo.new
-    classified.main_language = :fr
-    classified.translations.first.update_attributes(french_translation_hash)
-    classified.translations << japanese_translation
-    classified
+  let(:model_with_translation) do
+    model = Foo.new
+    model.main_language = :fr
+    model.translations << french_translation
+    model.translations << japanese_translation
+    model
   end
 
   it 'should have a translation' do
-    classified_with_translation.translations.first.title.should eq('En français')
+    model_with_translation.translations.first.title.should eq('En français')
   end
 
   it 'should return main language' do
-    classified_with_translation.main_translation.title.should eq french_translation.title
+    model_with_translation.main_translation.title.should eq french_translation.title
   end
 
   it 'should return a list of translation' do
-    classified_with_translation.languages.should eq([:fr, :ja])
+    model_with_translation.languages.should eq([:fr, :ja])
   end
 
   it 'should respond_to title' do
-    classified_with_translation.respond_to?(:title).should be_true
+    model_with_translation.respond_to?(:title).should be_true
   end
 
   it 'should not mess with method missing' do
     expect {
-      classified_with_translation.no_method
+      model_with_translation.no_method
     }.to raise_error(NoMethodError)
   end
 
@@ -60,7 +59,7 @@ describe Mongoid::Translate do
     end
 
     it 'should return a title from translation' do
-      classified_with_translation.title.should eq('En français')
+      model_with_translation.title.should eq('En français')
     end
 
   end
@@ -71,7 +70,7 @@ describe Mongoid::Translate do
     end
 
     it 'should return a title from translation' do
-      classified_with_translation.title.should eq('日本語で')
+      model_with_translation.title.should eq('日本語で')
     end
 
   end
@@ -82,7 +81,7 @@ describe Mongoid::Translate do
     end
 
     it 'should return main_language' do
-      classified_with_translation.title.should eq('En français')
+      model_with_translation.title.should eq('En français')
     end
   end
 end
