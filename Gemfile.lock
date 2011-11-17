@@ -1,0 +1,28 @@
+PATH
+  remote: .
+  specs:
+    mongoid_translate (0.0.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.1.1)
+      multi_json (~> 1.0)
+    diff-lcs (1.1.3)
+    multi_json (1.0.3)
+    rspec (2.7.0)
+      rspec-core (~> 2.7.0)
+      rspec-expectations (~> 2.7.0)
+      rspec-mocks (~> 2.7.0)
+    rspec-core (2.7.1)
+    rspec-expectations (2.7.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.7.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport (~> 3.1)
+  mongoid_translate!
+  rspec (~> 2.6)
