@@ -1,16 +1,31 @@
 # encoding: utf-8
 require "spec_helper"
 
+class Foo
+  include Mongoid::Document
+  include Mongoid::Translation
+
+  field :title,     String
+  field :content,   String
+
+  translate :title, :content
+end
+
+class Translation::Foo
+  include Mongoid::Document
+  include Mongoid::Translation
+end
+
 describe Mongoid::Translate do
   let(:french_translation_hash) { {:title => "En français",
                                    :content => "C'est du français",
                                    :language => :fr} }
-  let(:french_translation) {Translation::Classified.new(french_translation_hash)}
-  let(:japanese_translation) {Translation::Classified.new(:title => "日本語で",
+  let(:french_translation) {Translation::Foo.new(french_translation_hash)}
+  let(:japanese_translation) {Translation::Foo.new(:title => "日本語で",
                                                      :content => "確かに日本語なんです",
                                                      :language => :ja)}
   let(:classified_with_translation) do
-    classified = Classified.new
+    classified = Foo.new
     classified.main_language = :fr
     classified.translations.first.update_attributes(french_translation_hash)
     classified.translations << japanese_translation
