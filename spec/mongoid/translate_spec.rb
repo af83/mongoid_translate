@@ -47,12 +47,6 @@ describe Mongoid::Translate do
     model_with_translation.respond_to?(:title).should be_true
   end
 
-  it 'should not mess with method missing' do
-    expect {
-      model_with_translation.no_method
-    }.to raise_error(NoMethodError)
-  end
-
   context 'I18n == :fr' do
     before do
       I18n.locale = :fr
