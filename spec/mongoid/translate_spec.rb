@@ -47,6 +47,11 @@ describe Mongoid::Translate do
     model_with_translation.respond_to?(:title).should be_true
   end
 
+  it 'should responds to main_translation?' do
+    model_with_translation.translations.first.main_translation?.should be_true
+    model_with_translation.translations.last.main_translation?.should be_false
+  end
+
   context 'I18n == :fr' do
     before do
       I18n.locale = :fr

@@ -65,6 +65,12 @@ module Mongoid
       embedded_in  name.downcase.to_sym
     end
 
+    module InstanceMethods
+      def main_translation?
+        parent = self.class.to_s.gsub(/^.*::/, '').underscore
+        self.send(parent).main_language == self.language
+      end
+    end
   end
 
 end
