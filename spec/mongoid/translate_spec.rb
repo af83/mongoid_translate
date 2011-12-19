@@ -1,6 +1,24 @@
 # encoding: utf-8
 require "spec_helper"
 
+module Bar
+  class PlopNew
+    include Mongoid::Document
+    include Mongoid::Translate
+
+    translate :title, :content
+  end
+end
+
+module Bar
+  module Translation
+    class PlopNew
+      include Mongoid::Document
+      include Mongoid::Translation
+    end
+  end
+end
+
 class Foo
   include Mongoid::Document
   include Mongoid::Translate
@@ -20,7 +38,11 @@ describe Mongoid::Translate do
                                    :content => "C'est du français",
                                    :language => :fr} }
   let(:french_translation) {Translation::Foo.new(french_translation_hash)}
+  let(:namespace_french_translation) {Bar::Translation::PlopNew.new(french_translation_hash)}
   let(:japanese_translation) {Translation::Foo.new(:title => "日本語で",
+                                                     :content => "確かに日本語なんです",
+                                                     :language => :ja)}
+  let(:namespace_japanese_translation) {Bar::Translation::PlopNew.new(:title => "日本語で",
                                                      :content => "確かに日本語なんです",
                                                      :language => :ja)}
   let(:model_with_translation) do
@@ -29,6 +51,22 @@ describe Mongoid::Translate do
     model.translations << french_translation
     model.translations << japanese_translation
     model
+  end
+
+  let(:namespace_model_with_translation) do
+    model = Bar::PlopNew.new
+    model.main_language = :fr
+    model.translations << french_translation
+    model.translations << japanese_translation
+    model
+  end
+
+  context 'when models are namespaced' do
+
+    it 'should have a translation' do
+      namespace_model_with_translation.translations.first.title.should eq('En français')
+    end
+
   end
 
   it 'should have a translation' do
