@@ -68,7 +68,7 @@ module Mongoid
       end
       field :language, type: Symbol, default: lambda { I18n.locale }
       validates_uniqueness_of :language
-      embedded_in  name.underscore.to_sym
+      embedded_in  name.underscore.to_sym, class_name: class_name
     end
 
     module InstanceMethods
