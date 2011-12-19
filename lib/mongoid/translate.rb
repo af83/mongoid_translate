@@ -9,9 +9,14 @@ module Mongoid
     extend ::ActiveSupport::Concern
 
     included do
+      if self.to_s.include?('::')
+        class_name = self.to_s.split('::').insert(-2, "Translation").join('::')
+      else
+        class_name = "Translation::#{self}"
+      end
       field :main_language, type: Symbol, default: lambda { I18n.locale }
-      embeds_many :translations, class_name: "Translation::#{self}"
-      delegate :translated_fields, :to => "self.class"
+      embeds_many :translations, class_name: class_name
+      delegate :translated_fields, to: "self.class"
       accepts_nested_attributes_for :translations
     end
 
@@ -56,8 +61,9 @@ module Mongoid
     extend ::ActiveSupport::Concern
 
     included do
+      class_name = self.to_s.gsub('Translation::', '')
       name = self.to_s.gsub(/^.*::/, '')
-      name.constantize.translated_fields.each do |field|
+      class_name.constantize.translated_fields.each do |field|
         field field, type: String
       end
       field :language, type: Symbol, default: lambda { I18n.locale }
