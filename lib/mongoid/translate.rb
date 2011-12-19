@@ -64,7 +64,7 @@ module Mongoid
       class_name = self.to_s.gsub('Translation::', '')
       name = self.to_s.gsub(/^.*::/, '')
       class_name.constantize.translated_fields.each do |field|
-        field field, type: String
+        field field
       end
       field :language, type: Symbol, default: lambda { I18n.locale }
       validates_uniqueness_of :language
