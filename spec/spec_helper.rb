@@ -9,6 +9,11 @@ Mongoid.configure do |config|
 end
 
 RSpec.configure do |config|
+  # Require spec models ; order does matter
+  Dir[File.dirname(__FILE__) + "/models/*.rb"].each {|file| require file }
+  Dir[File.dirname(__FILE__) + "/models/bar/*.rb"].each {|file| require file }
+  Dir[File.dirname(__FILE__) + "/models/**/*.rb"].each {|file| require file }
+
   config.after :each do
     Mongoid.master.collections.reject { |c| c.name =~ /^system\./ }.each(&:drop)
   end
