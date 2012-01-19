@@ -6,9 +6,9 @@ require 'mongoid/translation'
 module Mongoid
   module Translate
     autoload :Slug,          'mongoid/translate/slug'
-  end
+  end # Translate
 
   module Translation
     autoload :Slug,          'mongoid/translation/slug'
-  end
-end
+  end # Translation
+end # Mongoid

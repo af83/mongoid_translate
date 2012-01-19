@@ -4,12 +4,19 @@ module Mongoid
     module Slug
       extend ::ActiveSupport::Concern
 
+      # Add slug field.
+      # Add callback for slug creation.
+      #
       included do
         field :slug, type: String
         after_validation :set_slug
       end
 
       module InstanceMethods
+        # Slug creation.
+        #
+        # @return [ Object ]
+        #
         def set_slug
           if self.slug.blank? && slugged_field.present?
             if translation_parent_class.send(:by_slug, slugged).one
@@ -46,6 +53,6 @@ module Mongoid
           SecureRandom.base64(4).tr('+/=', '-_ ').strip.delete("\n")
         end
       end
-    end
-  end
-end
+    end # InstanceMethods
+  end # Translation
+end # Mongoid
