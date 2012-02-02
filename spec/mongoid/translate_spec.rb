@@ -89,4 +89,20 @@ describe Mongoid::Translate do
       model_with_translation.title.should eq('En français')
     end
   end
+
+  context 'easy access' do
+    it 'should access japanese translation' do
+      model_with_translation.ja.should eq japanese_translation
+    end
+
+    it 'should acces french translation' do
+      model_with_translation.fr.should eq french_translation
+    end
+
+    it 'should delegate to method missing' do
+      lambda {
+        model_with_translation.de.should eq french_translation
+      }.should raise_error
+    end
+  end
 end

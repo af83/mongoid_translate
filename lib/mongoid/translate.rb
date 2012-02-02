@@ -38,6 +38,14 @@ module Mongoid
         translations.where(language: main_language).one
       end
 
+      def method_missing(method, *args, &block)
+        if self.languages.include?(method)
+          translations.where(language: method).one
+        else
+          super(method, *args, &block)
+        end
+      end
+
     end # InstanceMethods
 
     module ClassMethods
