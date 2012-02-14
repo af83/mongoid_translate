@@ -12,20 +12,18 @@ module Mongoid
         index 'translations.slug'
       end
 
-      module InstanceMethods
-        # Return slug.
-        # Didn't want to mess with to_param.
-        #
-        # @example
-        #   document.to_slug
-        #
-        # @return [ String ]
-        #
-        def to_slug
-          locale = languages.include?(I18n.locale) ? I18n.locale : main_language
-          translations.where(language: locale).one.slug
-        end
-      end # InstanceMethods
+      # Return slug.
+      # Didn't want to mess with to_param.
+      #
+      # @example
+      #   document.to_slug
+      #
+      # @return [ String ]
+      #
+      def to_slug
+        locale = languages.include?(I18n.locale) ? I18n.locale : main_language
+        translations.where(language: locale).one.slug
+      end
 
       module ClassMethods
         attr_accessor :slugged

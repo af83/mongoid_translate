@@ -21,32 +21,29 @@ module Mongoid
       index 'translations.language'
     end
 
-    module InstanceMethods
-      # Return list of existing languages
-      #
-      # @return [ Array ]
-      #
-      def languages
-        translations.map(&:language)
-      end
+    # Return list of existing languages
+    #
+    # @return [ Array ]
+    #
+    def languages
+      translations.map(&:language)
+    end
 
-      # Return main translation object
-      #
-      # @return [ Document ]
-      #
-      def main_translation
-        translations.where(language: main_language).one
-      end
+    # Return main translation object
+    #
+    # @return [ Document ]
+    #
+    def main_translation
+      translations.where(language: main_language).one
+    end
 
-      def method_missing(method, *args, &block)
-        if self.languages.include?(method)
-          translations.where(language: method).one
-        else
-          super(method, *args, &block)
-        end
+    def method_missing(method, *args, &block)
+      if self.languages.include?(method)
+        translations.where(language: method).one
+      else
+        super(method, *args, &block)
       end
-
-    end # InstanceMethods
+    end
 
     module ClassMethods
       attr_accessor :translated_fields

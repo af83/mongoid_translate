@@ -19,15 +19,13 @@ module Mongoid
       embedded_in  name.underscore.to_sym, class_name: class_name
     end
 
-    module InstanceMethods
-      # Check if current translation is main_translation.
-      #
-      # @return [ Boolean ]
-      #
-      def main_translation?
-        parent = self.class.to_s.sub(/^.*::/, '').underscore
-        self.send(parent).main_language == self.language
-      end
-    end # InstanceMethods
+    # Check if current translation is main_translation.
+    #
+    # @return [ Boolean ]
+    #
+    def main_translation?
+      parent = self.class.to_s.sub(/^.*::/, '').underscore
+      self.send(parent).main_language == self.language
+    end
   end # Translation
 end # Mongoid
