@@ -60,6 +60,7 @@ article.main_translation
 
 Persist translation. It's just an embeds_many relation.
 
+``` ruby
 article = Article.new
 article.translations << Translation::Article.new(:title => 'My title',
                                                  :language => :en)
@@ -70,7 +71,7 @@ Slug
 
 Slug are generated on translation creation. No change are made after.
 
-Slug feature can be added to translated model :
+Slug feature can be added to translated model:
 
 ``` ruby
 class Article
@@ -109,6 +110,6 @@ end
 
 ## Copyright
 
-Copyright (c) 2011 af83
+Copyright (c) 2012 af83
 
 Released under the MIT license
