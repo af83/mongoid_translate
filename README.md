@@ -56,6 +56,9 @@ article.languages
 
 # return main_translation
 article.main_translation
+
+# return english translation
+article.en
 ```
 
 Persist translation. It's just an embeds_many relation.
@@ -102,11 +105,6 @@ class Translation::Article
 
 end
 ```
-
-## Todo
-
-* Add scope by language. article.fr will return french translation.
-
 
 ## Copyright
 
