@@ -10,7 +10,7 @@ module Mongoid
     #
     included do
       class_name = self.to_s.gsub('Translation::', '')
-      name = self.to_s.gsub(/^.*::/, '')
+      name = self.to_s.sub(/^.*::/, '')
       class_name.constantize.translated_fields.each do |field|
         field field
       end
@@ -25,7 +25,7 @@ module Mongoid
       # @return [ Boolean ]
       #
       def main_translation?
-        parent = self.class.to_s.gsub(/^.*::/, '').underscore
+        parent = self.class.to_s.sub(/^.*::/, '').underscore
         self.send(parent).main_language == self.language
       end
     end # InstanceMethods

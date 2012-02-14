@@ -42,11 +42,11 @@ module Mongoid
         end
 
         def translation_parent_class
-          self.class.to_s.gsub('Translation::', '').constantize
+          self.class.to_s.sub('Translation::', '').constantize
         end
 
         def translation_parent
-          self.send(self.class.to_s.gsub(/^.*::/, '').underscore)
+          self.send(self.class.to_s.sub(/^.*::/, '').underscore)
         end
 
         def generate_token
