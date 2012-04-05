@@ -9,6 +9,7 @@ module Mongoid
       #
       included do
         scope :by_slug, lambda {|slug| where('translations.slug' => slug )}
+        validate :slug_uniqueness
         index 'translations.slug'
       end
 
@@ -23,6 +24,14 @@ module Mongoid
       def to_slug
         locale = languages.include?(I18n.locale) ? I18n.locale : main_language
         translations.where(language: locale).one.slug
+      end
+
+      private
+
+      def slug_uniqueness
+        if self.class.excludes(id: self.id).any_in('translations.slug' => self.translations.map(&:slug)).exists?
+          errors.add(:translations, :slug_uniqueness)
+        end
       end
 
       module ClassMethods

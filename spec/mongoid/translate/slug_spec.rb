@@ -34,6 +34,29 @@ describe Mongoid::Translate do
       model_with_translation.save
     end
 
+    describe 'validation' do
+      it 'should be valid' do
+        model_with_translation.should be_valid
+      end
+
+      it 'should not be valid if this slug already exist' do
+        model = Foo.new
+        model.main_language = :fr
+        model.translations.build(title: 'En français', slug: 'en-francais')
+        model.should_not be_valid
+        model.errors.messages.keys.should include :translations
+      end
+
+      it 'should not be valid if this slug already exist' do
+        model = Foo.new
+        model.main_language = :fr
+        model.translations.build(title: 'En français', slug: 'en-francais')
+        model.translations.build(title: 'En japonais', slug: '日本語で', language: :ja)
+        model.should_not be_valid
+        model.errors.messages.keys.should include :translations
+      end
+    end
+
     describe 'slug creation' do
       it 'should have a slug in fr' do
         model_with_translation.translations.first.slug.should_not be_nil
