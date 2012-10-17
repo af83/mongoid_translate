@@ -78,6 +78,7 @@ describe Mongoid::Translate do
       it 'should add a token to a already existing slug' do
         model_with_translation
         foo = Foo.new
+        foo.save
         foo.translations.create(french_translation_hash)
         foo.save
         Foo.all.count.should eq 2

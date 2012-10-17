@@ -10,7 +10,7 @@ module Mongoid
       included do
         scope :by_slug, lambda {|slug| where('translations.slug' => slug )}
         validate :slug_uniqueness
-        index 'translations.slug'
+        index 'translations.slug' => 1
       end
 
       # Return slug.

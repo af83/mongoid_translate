@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
   s.add_dependency "activesupport",     "~>3.1"
-  s.add_dependency "mongoid",           "~>2.3"
-  s.add_dependency "bson_ext",          "~>1.4"
+  s.add_dependency "mongoid",           "~>3.0"
   s.add_development_dependency "rspec", "~>2.6"
 end

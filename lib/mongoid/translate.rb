@@ -18,7 +18,7 @@ module Mongoid
       embeds_many :translations, class_name: class_name
       delegate :translated_fields, to: "self.class"
       accepts_nested_attributes_for :translations
-      index 'translations.language'
+      index 'translations.language' => 1
     end
 
     # Return list of existing languages

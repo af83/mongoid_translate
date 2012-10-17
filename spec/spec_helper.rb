@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
 require 'mongoid_translate'
 
 Mongoid.configure do |config|
-  config.master = Mongo::Connection.new.db('mongoid_translate_spec')
+  config.connect_to('mongoid_translate_spec', consistency: :strong)
 end
 
 RSpec.configure do |config|
@@ -15,6 +15,6 @@ RSpec.configure do |config|
   Dir[File.dirname(__FILE__) + "/models/**/*.rb"].each {|file| require file }
 
   config.after :each do
-    Mongoid.master.collections.reject { |c| c.name =~ /^system\./ }.each(&:drop)
+    Mongoid.purge!
   end
 end
