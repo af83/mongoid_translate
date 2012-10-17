@@ -11,7 +11,7 @@ Install it with rubygems:
 With bundler, add it to your `Gemfile`:
 
 ``` ruby
-gem "mongoid_translate", "~>0.1.0"
+gem "mongoid_translate", "~>1.0.0"
 ```
 
 ## Usage
