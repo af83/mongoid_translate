@@ -106,6 +106,44 @@ class Translation::Article
 end
 ```
 
+# Examples
+
+Controller with InheritedResources
+----------------------------------
+
+``` ruby
+before_filter :build_translations, only: :edit
+before_filter :build_translations_for_new, only: :new
+
+def build_translations
+  (I18n.available_locales - resource.languages).each do |language|
+    resource.translations.build(language: language)
+  end
+end
+
+def build_translations_for_new
+  (I18n.available_locales - build_resource.languages).each do |language|
+    build_resource.translations.build(language: language)
+  end
+end
+```
+
+Use slug on views with to_slug
+------------------------------
+
+``` ruby
+= link_to e.title, event_path(e.to_slug)
+```
+
+Use by_slug in controller with InheritedResources
+-------------------------------------------------
+
+``` ruby
+def resource
+  @event ||= Event.by_slug(params[:id]).one || Event.find(params[:id])
+end
+```
+
 ## Copyright
 
 Copyright (c) 2012 af83
