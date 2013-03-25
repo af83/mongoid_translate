@@ -146,6 +146,6 @@ end
 
 ## Copyright
 
-Copyright (c) 2012 af83
+Copyright (c) 2011-2013 af83
 
 Released under the MIT license
