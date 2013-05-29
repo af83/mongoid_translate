@@ -15,7 +15,7 @@ module Mongoid
         class_name = "Translation::#{self}"
       end
       field :main_language, type: Symbol, default: lambda { I18n.locale }
-      embeds_many :translations, class_name: class_name
+      embeds_many :translations, class_name: class_name, cascade_callbacks: true
       delegate :translated_fields, to: "self.class"
       accepts_nested_attributes_for :translations
       index 'translations.language' => 1
