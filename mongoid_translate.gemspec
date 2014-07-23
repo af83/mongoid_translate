@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.files        = `git ls-files lib MIT-LICENSE README.md`.split("\n")
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
-  s.add_dependency "activesupport",     "~>3.1"
-  s.add_dependency "mongoid",           "~>3.0"
-  s.add_development_dependency "rspec", "~>2.6"
+  s.add_dependency "activesupport",     "~> 4.0"
+  s.add_dependency "mongoid",           "~> 4.0"
+  s.add_development_dependency "rspec", "~> 2.6"
 end
