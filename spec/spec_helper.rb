@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
 require 'mongoid_translate'
 
 Mongoid.configure do |config|
-  config.connect_to('mongoid_translate_spec', consistency: :strong)
+  config.connect_to('mongoid_translate_spec')
 end
 
 RSpec.configure do |config|
